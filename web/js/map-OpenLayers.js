@@ -198,7 +198,7 @@ $.extend(fixmystreet.utils, {
         // link so that it updates the text in case they go
         // back
         if ( ! fixmystreet.markers.getVisibility() ) {
-            $('#hide_pins_link').click();
+            $('#hide_pins_link').trigger('click');
         }
         return lonlat;
       },
@@ -546,7 +546,7 @@ $.extend(fixmystreet.utils, {
             }
             $a[0].fireEvent("onclick", event);
         } else {
-            $a[0].click();
+            $a[0].trigger('click');
         }
     }
 
@@ -609,7 +609,7 @@ $.extend(fixmystreet.utils, {
         var qs = fixmystreet.utils.parse_query_string();
 
         var show_old_reports = replace_query_parameter(qs, 'show_old_reports', 'show_old_reports');
-        var page = $('.pagination:first').data('page');
+        var page = $('.pagination').first().data('page');
         if (page > 1) {
             qs.p = page;
         } else {
@@ -863,13 +863,13 @@ $.extend(fixmystreet.utils, {
             $('.js-pagination').on('change.filters', categories_or_status_changed);
             $('.js-pagination').on('click', 'a', function(e) {
                 e.preventDefault();
-                var page = $('.pagination:first').data('page');
+                var page = $('.pagination').first().data('page');
                 if ($(this).hasClass('show_old')) {
                     $("#show_old_reports").prop('checked', true);
                 } else if ($(this).hasClass('next')) {
-                    $('.pagination:first').data('page', page + 1);
+                    $('.pagination').first().data('page', page + 1);
                 } else {
-                    $('.pagination:first').data('page', page - 1);
+                    $('.pagination').first().data('page', page - 1);
                 }
                 fixmystreet.markers.protocol.use_page = true;
                 $(this).trigger('change');
@@ -896,7 +896,7 @@ $.extend(fixmystreet.utils, {
             zoomToBounds( fixmystreet.markers.getDataExtent() );
         }
 
-        $('#hide_pins_link, .big-hide-pins-link').click(function(e) {
+        $('#hide_pins_link, .big-hide-pins-link').on('click', function(e) {
             e.preventDefault();
             if (this.innerHTML == translation_strings.show_pins) {
                 fixmystreet.markers.setVisibility(true);
@@ -1256,7 +1256,7 @@ OpenLayers.Protocol.FixMyStreet = OpenLayers.Class(OpenLayers.Protocol.HTTP, {
         }
         var page;
         if (this.use_page) {
-            page = $('.pagination:first').data('page');
+            page = $('.pagination').first().data('page');
             this.use_page = false;
         } else if (this.initial_page) {
             page = 1;

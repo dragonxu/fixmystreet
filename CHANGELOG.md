@@ -6,6 +6,8 @@
         - Improve display of disabled fields in iOS.
     - Admin improvements:
         - Enable per-category hint customisation.
+    - Development improvements:
+        - Drop support for IE8, upgrade jQuery. #3017
 
 * v3.1 (16th November 2020)
     - Security:
