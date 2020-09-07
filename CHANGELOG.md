@@ -1,6 +1,8 @@
 ## Releases
 
 * Unreleased
+    - Front end improvements:
+        - Send text alerts for report updates to only-phone-verified users.
 
 * v3.1 (16th November 2020)
     - Security:
