@@ -734,7 +734,7 @@ sub admin_pages {
         $pages->{reportextrafields} = [ _('Extra Fields'), 10 ];
         $pages->{reportextrafields_edit} = [ undef, undef ];
     }
-    if ( $user->has_body_permission_to('emergency_message_edit') && $self->can('body') && $self->body ) {
+    if ( $user->has_body_permission_to('emergency_message_edit') ) {
         $pages->{emergencymessage} = [ _('Emergency message'), 12 ];
     }
 
@@ -1348,8 +1348,10 @@ Emergency message, if one has been set in the admin.
 
 sub emergency_message {
     my $self = shift;
-    return unless $self->can('body') && $self->body;
-    $self->body->get_extra_metadata('emergency_message');
+    return unless $self->can('body');
+    my $body = $self->body;
+    return unless $body;
+    $body->get_extra_metadata('emergency_message');
 }
 
 1;

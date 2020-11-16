@@ -2823,6 +2823,13 @@ $nicetable-hover-background: rgba($primary, 0.15) !default;
     }
 }
 
+.emergency-message {
+  border: 1px solid #525252;
+  padding: 2em;
+  font-size: 1.2em;
+  margin: 0 0 2em;
+}
+
 @import "_admin";
 @import "_dropzone";
 @import "_multiselect";
