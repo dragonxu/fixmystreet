@@ -19,10 +19,10 @@
 }
 
 
-#site-header {
-    background: $base_bg url("/cobrands/greenwich/mastWave.gif") 100% 0 no-repeat;
-    background-size: cover;
-}
+// #site-header {
+//     background: $base_bg url("/cobrands/greenwich/mastWave.gif") 100% 0 no-repeat;
+//     background-size: cover;
+// }
 
 .item-list--reports__item, #front-main #postcodeForm {
     background-color: $greenwich_light_grey;
@@ -33,7 +33,8 @@
 }
 
 label[for=pc] {
-    color: $greenwich_dark_red;
+    color: $greenwich_red;
+    text-align: left;
 }
 
 #front_stats {
@@ -59,7 +60,12 @@ footer {
 }
 
 h1, h2 {
-    font-style: italic;
+    font-weight: 700;
+    text-align: left;
+}
+
+p {
+    text-align: left;
 }
 
 button, input[type=submit], .btn, .green-btn {
