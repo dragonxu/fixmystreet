@@ -6,7 +6,7 @@ if (!fixmystreet.maps) {
 
 fixmystreet.maps.banes_defaults = {
     http_options: {
-        url: "https://isharemaps.bathnes.gov.uk/getows.ashx",
+        url: "https://tilma.mysociety.org/proxy/bathnes/isharemaps/",
         params: {
             mapsource: "BathNES/WFS",
             SERVICE: "WFS",
