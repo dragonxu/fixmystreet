@@ -1163,6 +1163,7 @@ fixmystreet.message_controller = (function() {
         $("#js-roads-responsibility .js-responsibility-message").addClass("hidden");
         var asset_strings = $(id).find('.js-roads-asset');
         if (asset_item) {
+            // TODO: Need to do something similar to this to get dynamic email address.
             asset_strings.html('a <b class="asset-' + asset_type + '">' + asset_item + '</b>');
         } else {
             asset_strings.html(asset_strings.data('original'));
