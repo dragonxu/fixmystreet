@@ -234,5 +234,36 @@ fixmystreet.assets.add(fixmystreet.maps.banes_defaults, {
     attribution: " © Crown Copyright. All rights reserved. 1000233344"
 });
 
+fixmystreet.assets.add(fixmystreet.maps.banes_defaults, {
+    http_options: {
+        params: {
+            TYPENAME: "Curo_Land_Registry"
+        }
+    },
+    asset_type: 'area',
+    // stylemap: fixmystreet.assets.stylemap_invisible, // TODO: Enable this to hide the layer
+    non_interactive: true,
+    always_visible: true,
+    all_categories: true, // TODO: Not really
+    road: true,
+    no_asset_msg_id: '#js-housing-association-restriction',
+    cat_map: {
+        'Allotment issue': 'estates@curo-group.co.uk',
+        'Household bins left out early or after collection day': 'tennancycompliance&support@curo-group.co.uk'
+    },
+    actions: {
+        found: function(layer) {
+            var cat = $('select#form_category').val();
+            var asset_item = layer.fixmystreet.cat_map[cat];
+            if (asset_item) {
+                layer.fixmystreet.asset_item = asset_item;
+                fixmystreet.message_controller.road_not_found(layer);
+            } else {
+                fixmystreet.message_controller.road_found(layer);
+            }
+        },
+        not_found: fixmystreet.message_controller.road_found,
+    }
+});
 
 })();
