@@ -1837,11 +1837,6 @@ html.js #map .noscript {
         background-position: -12px 0;
     }
 
-    #hide_pins_link:after {
-        @extend %sub-map-link-icon;
-        background-position: -24px 0;
-    }
-
     #fms_shortlist_all:after {
         @extend %sub-map-link-icon;
         background-position: -60px 0;

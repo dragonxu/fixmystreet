@@ -1,0 +1,16 @@
+<div class="fms_map_links" style="position: absolute;" class="olControlNoSelect" unselectable="on">
+  [% IF c.config.BING_MAPS_API_KEY %]
+      [% IF c.req.params.aerial %]
+        <a id="map_layer_toggle" rel="nofollow" href="[% c.uri_with( { aerial => 0 } ) %]">[% loc('Road map') %]</a>
+      [% ELSE %]
+        <a id="map_layer_toggle" rel="nofollow" href="[% c.uri_with( { aerial => 1 } ) %]">[% loc('Aerial map') %]</a>
+      [% END %]
+  [% END %]
+  [% IF true %] <!-- TODO: Only on pages with multiple pins? -->
+      [% IF c.req.params.no_pins %]
+        <a class="big-hide-pins-link" rel="nofollow" href="[% c.uri_with( { no_pins => 0 } ) %]">[% loc('Show pins') %]</a>
+      [% ELSE %]
+        <a class="big-hide-pins-link" rel="nofollow" href="[% c.uri_with( { no_pins => 1 } ) %]">[% loc('Hide pins') %]</a>
+      [% END %]
+  [% END %]
+</div>

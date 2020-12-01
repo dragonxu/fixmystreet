@@ -198,7 +198,7 @@ $.extend(fixmystreet.utils, {
         // link so that it updates the text in case they go
         // back
         if ( ! fixmystreet.markers.getVisibility() ) {
-            $('#hide_pins_link').click();
+            $('.big-hide-pins-link').click();
         }
         return lonlat;
       },
@@ -896,16 +896,16 @@ $.extend(fixmystreet.utils, {
             zoomToBounds( fixmystreet.markers.getDataExtent() );
         }
 
-        $('#hide_pins_link, .big-hide-pins-link').click(function(e) {
+        $('.big-hide-pins-link').click(function(e) {
             e.preventDefault();
             if (this.innerHTML == translation_strings.show_pins) {
                 fixmystreet.markers.setVisibility(true);
                 fixmystreet.select_feature.activate();
-                $('#hide_pins_link, .big-hide-pins-link').html(translation_strings.hide_pins);
+                $('.big-hide-pins-link').html(translation_strings.hide_pins);
             } else if (this.innerHTML == translation_strings.hide_pins) {
                 fixmystreet.markers.setVisibility(false);
                 fixmystreet.select_feature.deactivate();
-                $('#hide_pins_link, .big-hide-pins-link').html(translation_strings.show_pins);
+                $('.big-hide-pins-link').html(translation_strings.show_pins);
             }
             if (typeof ga !== 'undefined') {
                 ga('send', 'event', 'toggle-pins-on-map', 'click');
