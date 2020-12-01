@@ -2,19 +2,17 @@
 @import "_fonts";
 @import "../sass/layout";
 
-
 #site-logo,
 body.frontpage #site-logo,
-body.twothirdswidthpage #site-logo
-{
-        position: relative;
-        top: 14px;
-        left: 14px;
-        margin: 0;
-        padding: 0;
-        background: url("/cobrands/greenwich/logo.gif") 0 0 no-repeat;
-        width: 170px;
-        height: 83px;
+body.twothirdswidthpage #site-logo {
+    position: relative;
+    top: 14px;
+    left: 14px;
+    margin: 0;
+    padding: 0;
+    background: url("/cobrands/greenwich/logo.gif") 0 0 no-repeat;
+    width: 170px;
+    height: 83px;
 }
 
 #front-main {
@@ -33,7 +31,7 @@ body.twothirdswidthpage #site-logo
     }
 
     h1 {
-        color: $greenwich_dark_red;
+        // color: $greenwich_dark_red;
         padding-bottom: 3em;
     }
 }
@@ -47,7 +45,7 @@ body.twothirdswidthpage #site-logo
     }
 
     .container:first-child {
-        background: url("/cobrands/greenwich/mastWave.gif") 0 0 no-repeat;
+        // background: url("/cobrands/greenwich/mastWave.gif") 0 0 no-repeat;
         min-height: 110px;
     }
 }
@@ -70,7 +68,9 @@ body.frontpage {
     display: none;
 }
 
-#greenwich-menu-desktop, #fms-menu-desktop, #greenwich-breadcrumb {
+#greenwich-menu-desktop,
+#fms-menu-desktop,
+#greenwich-breadcrumb {
     display: block;
     font-size: 15px;
     list-style: none;
@@ -83,11 +83,13 @@ body.frontpage {
         margin: 0;
         padding: 0.25em 0.5em;
 
-        span, a {
+        span,
+        a {
             padding: 0.5em;
         }
 
-        span, a:hover {
+        span,
+        a:hover {
             text-decoration: underline;
         }
     }
@@ -96,14 +98,15 @@ body.frontpage {
 #greenwich-menu-desktop {
     background: $greenwich_dark_grey;
     font-family: $heading-font;
-    font-style: italic;
     border-top: solid 4px $primary;
     border-bottom: solid 4px $greenwich_med_grey;
     text-align: right;
     padding-right: 1em;
+    font-weight: 300;
 
     li {
-        span, a {
+        span,
+        a {
             color: $nav_colour;
         }
     }
@@ -118,11 +121,12 @@ body.frontpage {
         margin: 0;
         font-size: 11px;
 
-        span, a {
+        span,
+        a {
             color: black;
 
             &.bc_arrow {
-                background: url('/cobrands/greenwich/bcArrow.gif') no-repeat right 0.4em;
+                background: url("/cobrands/greenwich/bcArrow.gif") no-repeat right 0.4em;
                 padding: 0 15px 0 0;
             }
         }
@@ -135,7 +139,10 @@ body.frontpage {
 
     li {
         a {
-            color: $greenwich_dark_grey;
+            color: $primary_text;
+            &:hover {
+                color: $greenwich_red;
+            }
         }
         span {
             color: $greenwich_red;
@@ -181,11 +188,23 @@ body.mappage {
     }
 
     .nav-menu {
-        a, span {
+        a,
+        span {
             color: $primary_text;
         }
         a:hover {
             text-decoration: underline;
+        }
+    }
+    // Around page
+    .pagination {
+        .next,
+        .prev {
+            color: #fff;
+            border-radius: 0.25em;
+            &:hover {
+                text-decoration: underline;
+            }
         }
     }
 }
@@ -243,7 +262,9 @@ body.twothirdswidthpage .content .sticky-sidebar {
                     border-left: none;
                 }
 
-                a, a:link, a:visited {
+                a,
+                a:link,
+                a:visited {
                     color: $primary_text;
                 }
             }

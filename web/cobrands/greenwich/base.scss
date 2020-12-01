@@ -6,6 +6,16 @@
 @import "../sass/base";
 @import "../sass/report_list_pins";
 
+body.frontpage {
+    color: $primary_text;
+    a,
+    .fake-link {
+        &:visited {
+            color: $links_visited;
+        }
+    }
+}
+
 #site-logo {
     background: url("/cobrands/greenwich/logo.gif") 0 50% no-repeat;
     background-size: contain;
@@ -15,24 +25,29 @@
 }
 
 #nav-link {
-  background: url('/cobrands/greenwich/tab-red.png') 0 0 no-repeat;
+    background: url("/cobrands/greenwich/tab-red.png") 0 0 no-repeat;
 }
-
 
 // #site-header {
 //     background: $base_bg url("/cobrands/greenwich/mastWave.gif") 100% 0 no-repeat;
 //     background-size: cover;
 // }
 
-.item-list--reports__item, #front-main #postcodeForm {
+.item-list--reports__item,
+#front-main #postcodeForm {
     background-color: $greenwich_light_grey;
 }
 
 #front-main #postcodeForm {
     margin-top: 1em;
+    div {
+        input#sub {
+            background: $greenwich_red;
+        }
+    }
 }
 
-label[for=pc] {
+label[for="pc"] {
     color: $greenwich_red;
     text-align: left;
 }
@@ -41,13 +56,19 @@ label[for=pc] {
     color: $nav_colour;
 }
 
-#greenwich-menu-desktop, #fms-menu-desktop, #greenwich-breadcrumb {
+#greenwich-menu-desktop,
+#fms-menu-desktop,
+#greenwich-breadcrumb {
     display: none;
 }
 
 footer {
     ul li {
         list-style: none;
+        a {
+            color: $primary_text;
+            text-decoration: underline;
+        }
     }
 
     hr {
@@ -59,7 +80,8 @@ footer {
     }
 }
 
-h1, h2 {
+h1,
+h2 {
     font-weight: 700;
     text-align: left;
 }
@@ -68,17 +90,52 @@ p {
     text-align: left;
 }
 
-button, input[type=submit], .btn, .green-btn {
+button,
+.btn,
+.green-btn {
     border: none;
-    border-radius: 0;
+    // border-radius: 0.25em;
     color: white;
-    background: $greenwich_dark_grey;
-    border-bottom: solid 4px $greenwich_red;
+    background: $greenwich_red;
 
     &:hover {
         border: none;
-        border-bottom: solid 4px lighten($greenwich_red, 5%);
         text-decoration: underline;
-        background: lighten($greenwich_dark_grey, 2%);
+        color: white;
+        background: lighten($greenwich_red, 2%);
     }
 }
+
+// Report page
+form#form_update_form {
+    fieldset {
+        div {
+            button.btn {
+                color: white !important;
+            }
+        }
+    }
+}
+
+// Sign in page
+form {
+    fieldset {
+        #form_sign_in {
+            p {
+                input.fake-link {
+                    color: $primary_text;
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                    &:visited {
+                        color: $links_visited;
+                    }
+                }
+            }
+        }
+    }
+}
+
+// input[type="submit"] {
+
+// }
