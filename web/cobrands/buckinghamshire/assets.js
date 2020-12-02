@@ -321,6 +321,7 @@ fixmystreet.assets.add(defaults, {
         }
     },
     no_asset_msg_id: '#js-not-a-road',
+    no_asset_msg_ids: '#js-not-a-road,#js-not-council-road-he,#js-not-council-road-other,#js-not-council-road',
     usrn: {
         attribute: 'site_code',
         field: 'site_code'

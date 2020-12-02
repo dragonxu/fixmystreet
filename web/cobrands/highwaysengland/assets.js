@@ -59,6 +59,7 @@ fixmystreet.assets.add(defaults, {
     nearest_radius: 50,
     asset_type: 'road',
     no_asset_msg_id: '#js-not-he-road',
+    no_asset_msg_ids: '#js-not-he-road,#js-dbfo-road',
     actions: {
         found: function(layer, feature) {
             // If the road is a DBFO road then we want to show the not found message.
