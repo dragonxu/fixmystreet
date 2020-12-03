@@ -2,13 +2,15 @@
 
 $greenwich_red: #c1002b;
 $greenwich_dark_red: #a71930;
-$greenwich_dark_grey: #4b5459;
+$greenwich_dark_grey: #4b5559;
 $greenwich_med_grey: #d9e0e4;
-$greenwich_light_grey: #e0e6e9;
+$greenwich_light_grey: #eee;
+
 
 $primary: $greenwich_red;
 $primary_b: #000000;
 $primary_text: #1d1d1d;
+$contrast_text: #fff;
 
 $base_bg: #fff;
 $base_fg: #000;
@@ -25,7 +27,7 @@ $col_big_numbers: $primary;
 
 $col_click_map: $greenwich_red;
 
-$container-max-width: 990px;
+$container-max-width: 1280px;
 
 $search-help-alignment: left;
 $search-help-background: #fff3f3;

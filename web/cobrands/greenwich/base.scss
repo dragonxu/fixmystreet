@@ -26,6 +26,21 @@ body.frontpage {
 
 #nav-link {
     background: url("/cobrands/greenwich/tab-red.png") 0 0 no-repeat;
+    top: 0;
+    transform: translateY(-0%);
+}
+
+.main-menu-container {
+    background: $greenwich_dark_grey;
+    color: $contrast_text;
+    padding: 5px 0;
+    margin-top: 10px;
+}
+
+body.mappage {
+    .page-header-container, .fms-menu-container {
+        display: none;
+    }
 }
 
 // #site-header {
@@ -84,6 +99,7 @@ h1,
 h2 {
     font-weight: 700;
     text-align: left;
+    line-height: 1.3;
 }
 
 p {
