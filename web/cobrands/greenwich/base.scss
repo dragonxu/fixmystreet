@@ -37,11 +37,20 @@ body.frontpage {
     margin-top: 10px;
 }
 
-body.mappage {
+body.mappage, body.authpage, body.twothirdswidthpage, body.alertpage {
     .page-header-container, .fms-menu-container {
         display: none;
     }
 }
+
+body.twothirdswidthpage {
+    .sticky-sidebar {
+        .plain-list {
+            padding: 10px 0 0 0;
+        }
+    }
+}
+
 
 // #site-header {
 //     background: $base_bg url("/cobrands/greenwich/mastWave.gif") 100% 0 no-repeat;

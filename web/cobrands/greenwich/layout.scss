@@ -61,6 +61,9 @@ body.authpage, body.twothirdswidthpage, body.alertpage {
         .container:first-child {
             min-height: 0;
         }
+        .page-header-container, .fms-menu-container {
+            display: block;
+        }
     }
 
     .main-menu-container {
@@ -75,6 +78,12 @@ body.authpage, body.twothirdswidthpage, body.alertpage {
         }
     }
 }
+
+// body.authpage, body.twothirdswidthpage, body.alertpage {
+//     .page-header-container, .fms-menu-container {
+//         display: none;
+//     }
+// }
 
 body.authpage {
     .footer-skyline, .site-footer, .societyworks-footer {
