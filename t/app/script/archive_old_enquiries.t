@@ -307,4 +307,145 @@ subtest 'can provide reports as csv' => sub {
     is $alert_sent->parameter, $comment->id, 'AlertSent created for new comment';
 };
 
+subtest 'csv list not acted on if commit not set' => sub {
+    my $fh = File::Temp->new;
+    my $name = $fh->filename;
+
+    $opts->{reports} = $name;
+    $opts->{commit} = 0;
+
+    my @new_reports = $mech->create_problems_for_body(4, $oxfordshire->id, 'newer reports', {
+      areas      => ',2237,',
+      lastupdate => '2016-12-01 07:00:00',
+      user       => $user,
+    });
+
+    my @old_reports = $mech->create_problems_for_body(4, $oxfordshire->id, 'older reports', {
+      areas      => ',2237,',
+      lastupdate => '2015-12-01 07:00:00',
+      user       => $user,
+    });
+
+    my $alert_new = FixMyStreet::DB->resultset('Alert')->find_or_create(
+        {
+            user => $user,
+            parameter => $new_reports[0]->id,
+            alert_type => 'new_updates',
+            whensubscribed => '2015-12-01 07:00:00',
+            confirmed => 1,
+            cobrand => 'default',
+        }
+    );
+
+    my $alert_old = FixMyStreet::DB->resultset('Alert')->find_or_create(
+        {
+            user => $user,
+            parameter => $old_reports[0]->id,
+            alert_type => 'new_updates',
+            whensubscribed => '2015-12-01 07:00:00',
+            confirmed => 1,
+            cobrand => 'default',
+        }
+    );
+    is $alert_new->alerts_sent->count, 0, 'Nothing has been sent for new report alert';
+    is $alert_old->alerts_sent->count, 0, 'Nothing has been sent for old report alert';
+
+    my $skipped = pop @new_reports;
+    for my $p ( @new_reports, @old_reports ) {
+        print $fh $p->id . "\n";
+    }
+
+    $fh->seek( 0, SEEK_SET );
+
+    FixMyStreet::Script::ArchiveOldEnquiries::archive($opts);
+
+    $_->discard_changes for ( @old_reports, @new_reports );
+
+    is $old_reports[0]->state, "confirmed", "report is is not updated";
+    is $new_reports[0]->state, "confirmed", "report is not updated";
+    is $skipped->state, "confirmed", "report is ignored";
+
+    is $alert_new->alerts_sent->count, 0, 'Archiving did not send alert for new report alert';
+    is $alert_old->alerts_sent->count, 0, 'Archiving did not send alert for old report alert';
+
+    is $new_reports[0]->comments->count, 0, 'No comment added to report';
+};
+
+subtest 'date based updates do not happen without commit' => sub {
+    FixMyStreet::override_config {
+          ALLOWED_COBRANDS => [ 'oxfordshire' ],
+    }, sub {
+
+        $opts->{closure_cutoff} = "2015-01-01 00:00:00";
+        $opts->{email_cutoff} = "2016-01-01 00:00:00";
+        $opts->{reports} = undef;
+
+        $mech->clear_emails_ok;
+        $mech->email_count_is(0);
+
+        my ($report) = $mech->create_problems_for_body(1, $oxfordshire->id, 'Test', {
+            areas      => ',2237,',
+            user_id    => $user->id,
+        });
+
+        my ($report1) = $mech->create_problems_for_body(1, $oxfordshire->id . "," .$west_oxon->id, 'Test', {
+            areas      => ',2237,',
+            lastupdate => '2016-12-01 07:00:00',
+            user       => $user,
+        });
+
+        my ($report2) = $mech->create_problems_for_body(1, $oxfordshire->id, 'Test 2', {
+            areas      => ',2237,',
+            lastupdate => '2015-12-01 08:00:00',
+            user       => $user,
+            state      => 'investigating',
+        });
+
+        my ($report3, $report4) = $mech->create_problems_for_body(2, $oxfordshire->id, 'Test', {
+            areas      => ',2237,',
+            lastupdate => '2014-12-01 07:00:00',
+            user       => $user,
+        });
+
+        my ($report5) = $mech->create_problems_for_body(1, $oxfordshire->id . "," .$west_oxon->id, 'Test', {
+            areas      => ',2237,',
+            lastupdate => '2014-12-01 07:00:00',
+            user       => $user,
+            state      => 'in progress'
+        });
+
+        my $alert = FixMyStreet::DB->resultset('Alert')->find_or_create(
+            {
+                user => $user,
+                parameter => $report1->id,
+                alert_type => 'new_updates',
+                whensubscribed => '2015-12-01 07:00:00',
+                confirmed => 1,
+                cobrand => 'default',
+            }
+        );
+        is $alert->alerts_sent->count, 0, 'No alerts for report 1';
+
+        FixMyStreet::Script::ArchiveOldEnquiries::archive($opts);
+
+        $report->discard_changes;
+        $report1->discard_changes;
+        $report2->discard_changes;
+        $report3->discard_changes;
+        $report4->discard_changes;
+        $report5->discard_changes;
+
+        is $report1->state, 'confirmed', 'Report 1 has been not been updated';
+        is $report2->state, 'investigating', 'Report 2 has not been updated';
+        is $report3->state, 'confirmed', 'Report 3 has not been updated';
+        is $report4->state, 'confirmed', 'Report 4 has not been updated';
+        is $report5->state, 'in progress', 'Report 5 has not been updated';
+
+        is $report1->comments->count, 0, 'Report 1 has no comments';
+        is $alert->alerts_sent->count, 0, 'No alerts for report 1';
+
+        $mech->email_count_is(0);
+    };
+};
+
 done_testing();
