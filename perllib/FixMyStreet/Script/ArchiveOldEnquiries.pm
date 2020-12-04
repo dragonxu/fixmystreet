@@ -88,7 +88,7 @@ sub get_ids_from_csv {
     my $csv = Text::CSV->new;
     open my $fh, "<:encoding(utf-8)", $opts->{reports} or die "Failed to open $opts->{reports}: $!\n";
     while (my $line = $csv->getline($fh)) {
-        push @report_ids, $line->[0] if $line->[0] =~ m/^\d+/;
+        push @report_ids, $line->[0] if $line->[0] =~ m/^\d+$/;
     }
 
     return \@report_ids;

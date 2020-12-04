@@ -3,6 +3,7 @@ use FixMyStreet::Script::ArchiveOldEnquiries;
 
 use File::Temp;
 use Path::Tiny;
+use Test::Exception;
 
 my $mech = FixMyStreet::TestMech->new();
 
@@ -237,6 +238,26 @@ subtest 'can configure closure state' => sub {
   $p->discard_changes;
   is $p->state, "no further action", "closure state set";
   is $p->comments->first->problem_state, "no further action", "comment problem state set";
+};
+
+subtest 'csv file correctly handled' => sub {
+    $opts->{reports} = 'doesnotexist.csv';
+    FixMyStreet::Script::ArchiveOldEnquiries::update_options($opts);
+    throws_ok { FixMyStreet::Script::ArchiveOldEnquiries::get_ids_from_csv } qr/Failed to open/, 'handles missing file';
+
+    my $fh = File::Temp->new;
+    my $name = $fh->filename;
+    $opts->{reports} = $name;
+
+    for ( qw/ 1 20 3x ten 11 /) {
+        print $fh $_ . "\n";
+    }
+    $fh->seek( 0, SEEK_SET );
+
+    FixMyStreet::Script::ArchiveOldEnquiries::update_options($opts);
+    my $ids = FixMyStreet::Script::ArchiveOldEnquiries::get_ids_from_csv;
+
+    is_deeply $ids, [1, 20, 11], 'skips non numeric ids';
 };
 
 subtest 'can provide reports as csv' => sub {
